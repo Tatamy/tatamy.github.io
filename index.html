@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dmitry Kondratov — CTO / Technical Director</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0D1418;
+    --bg-raised:#131C21;
+    --panel:#162126;
+    --line:#233038;
+    --line-soft:#1B262C;
+    --text:#E9EFEF;
+    --muted:#8CA0A8;
+    --muted-dim:#5E7079;
+    --ok:#3ECF8E;
+    --ok-dim:#1E4A38;
+    --warn:#F5A623;
+    --warn-dim:#4A3A18;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--ok); color:#08110D; }
+  a{color:inherit;}
+  :focus-visible{ outline:2px solid var(--ok); outline-offset:3px; }
+
+  .wrap{ max-width:860px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    border-bottom:1px solid var(--line-soft);
+    background:rgba(13,20,24,0.85);
+    backdrop-filter:blur(6px);
+    position:sticky; top:0; z-index:20;
+  }
+  .topbar-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px; max-width:860px; margin:0 auto;
+    font-family:var(--mono); font-size:12px; color:var(--muted);
+  }
+  .dots{ display:flex; gap:6px; }
+  .dots span{ width:9px; height:9px; border-radius:50%; background:var(--line); display:inline-block; }
+  .dots span:nth-child(1){ background:#E5534B; }
+  .dots span:nth-child(2){ background:var(--warn); }
+  .dots span:nth-child(3){ background:var(--ok); }
+  .topbar-path{ color:var(--muted-dim); }
+  .topbar-status{ display:flex; align-items:center; gap:6px; color:var(--ok); }
+  .pulse{ width:7px; height:7px; border-radius:50%; background:var(--ok); box-shadow:0 0 0 0 rgba(62,207,142,0.6); animation:pulse 2s infinite; }
+  @keyframes pulse{
+    0%{ box-shadow:0 0 0 0 rgba(62,207,142,0.55); }
+    70%{ box-shadow:0 0 0 8px rgba(62,207,142,0); }
+    100%{ box-shadow:0 0 0 0 rgba(62,207,142,0); }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:72px 0 56px; }
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.12em;
+    color:var(--muted-dim); text-transform:uppercase; margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:'//'; color:var(--ok); }
+  h1{
+    font-family:var(--sans); font-weight:800; letter-spacing:-0.02em;
+    font-size:clamp(36px,6vw,58px); line-height:1.04; color:#fff;
+  }
+  .role{
+    font-family:var(--mono); font-size:clamp(14px,2vw,17px); color:var(--ok);
+    margin-top:14px; font-weight:500;
+  }
+  .role span{ color:var(--muted); }
+  .summary{
+    margin-top:22px; max-width:620px; color:var(--muted); font-size:16px; line-height:1.65;
+  }
+  .summary strong{ color:var(--text); font-weight:600; }
+
+  .meta-row{
+    display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;
+  }
+  .chip{
+    font-family:var(--mono); font-size:12.5px; color:var(--muted);
+    border:1px solid var(--line); border-radius:5px; padding:7px 12px;
+    display:flex; align-items:center; gap:7px; background:var(--bg-raised);
+  }
+  .chip a{ color:var(--text); text-decoration:none; }
+  .chip a:hover{ color:var(--ok); }
+  .chip.status{ border-color:var(--ok-dim); color:var(--ok); }
+
+  /* ---------- section shell ---------- */
+  section{ padding:52px 0; border-top:1px solid var(--line-soft); }
+  .section-head{
+    display:flex; align-items:baseline; gap:14px; margin-bottom:30px;
+  }
+  .section-head .tag{
+    font-family:var(--mono); font-size:11px; color:var(--muted-dim);
+    border:1px solid var(--line); border-radius:4px; padding:3px 8px;
+  }
+  .section-head h2{
+    font-size:22px; font-weight:700; letter-spacing:-0.01em; color:#fff;
+  }
+
+  /* ---------- incident log ---------- */
+  .incident{
+    border:1px solid var(--line); border-radius:8px; background:var(--panel);
+    margin-bottom:16px; overflow:hidden;
+    transition:border-color .15s ease;
+  }
+  .incident:hover{ border-color:#31424c; }
+  .incident-head{
+    display:flex; justify-content:space-between; align-items:center; gap:16px;
+    padding:18px 20px; flex-wrap:wrap;
+  }
+  .incident-title{ display:flex; flex-direction:column; gap:4px; }
+  .incident-title .company{ font-weight:700; font-size:17px; color:#fff; }
+  .incident-title .role-line{ font-family:var(--mono); font-size:12.5px; color:var(--muted); }
+  .badge{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.04em;
+    border-radius:4px; padding:4px 9px; white-space:nowrap; font-weight:500;
+  }
+  .badge.resolved{ background:var(--ok-dim); color:var(--ok); border:1px solid #2a5c47; }
+  .badge.critical{ background:var(--warn-dim); color:var(--warn); border:1px solid #5c491f; }
+  .incident-body{ padding:0 20px 20px; }
+  .incident-body .symptom{ color:var(--muted); font-size:14px; margin-bottom:12px; }
+  .incident-body .symptom b{ color:var(--text); font-family:var(--mono); font-size:12px; letter-spacing:0.03em; }
+  ul.fixlist{ list-style:none; display:flex; flex-direction:column; gap:8px; }
+  ul.fixlist li{ font-size:14.5px; color:var(--text); padding-left:18px; position:relative; }
+  ul.fixlist li::before{ content:'✓'; position:absolute; left:0; color:var(--ok); font-family:var(--mono); font-size:13px; }
+  .stack-row{
+    margin-top:14px; display:flex; flex-wrap:wrap; gap:6px;
+  }
+  .stack-row span{
+    font-family:var(--mono); font-size:11px; color:var(--muted-dim);
+    border:1px solid var(--line); border-radius:4px; padding:3px 7px;
+  }
+
+  /* earlier experience - condensed log lines */
+  .log-line{
+    font-family:var(--mono); font-size:13px; color:var(--muted);
+    padding:10px 0; border-bottom:1px dashed var(--line-soft);
+    display:flex; gap:14px; flex-wrap:wrap;
+  }
+  .log-line:last-child{ border-bottom:none; }
+  .log-line .ts{ color:var(--muted-dim); flex-shrink:0; width:118px; }
+  .log-line .lc{ color:var(--text); }
+
+  /* ---------- capabilities ---------- */
+  .cap-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  @media (max-width:640px){ .cap-grid{ grid-template-columns:1fr; } }
+  .cap{
+    border:1px solid var(--line); border-radius:8px; padding:18px; background:var(--panel);
+  }
+  .cap .k{ font-family:var(--mono); font-size:11px; color:var(--ok); letter-spacing:0.04em; margin-bottom:8px; }
+  .cap .v{ font-size:14.5px; color:var(--muted); }
+
+  .stack-cloud{ display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; }
+  .stack-cloud span{
+    font-family:var(--mono); font-size:12.5px; color:var(--text);
+    border:1px solid var(--line); border-radius:5px; padding:6px 11px; background:var(--bg-raised);
+  }
+
+  /* ---------- footer / contact ---------- */
+  .contact-panel{
+    border:1px solid var(--ok-dim); border-radius:10px; background:var(--bg-raised);
+    padding:36px; text-align:left;
+  }
+  .contact-panel h2{ font-size:24px; color:#fff; margin-bottom:10px; }
+  .contact-panel p{ color:var(--muted); font-size:15px; max-width:520px; margin-bottom:24px; }
+  .cta-row{ display:flex; gap:12px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--mono); font-size:13.5px; text-decoration:none;
+    padding:12px 18px; border-radius:6px; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .btn.primary{ background:var(--ok); color:#08160F; font-weight:700; }
+  .btn.primary:hover{ transform:translateY(-2px); }
+  .btn.ghost{ border:1px solid var(--line); color:var(--text); }
+  .btn.ghost:hover{ border-color:var(--ok); color:var(--ok); }
+
+  footer{ padding:30px 0 60px; font-family:var(--mono); font-size:11.5px; color:var(--muted-dim); }
+
+  @media (prefers-reduced-motion: reduce){
+    .pulse{ animation:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <div class="topbar-path">~/kondratov/status</div>
+    <div class="topbar-status"><span class="pulse"></span> operational</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="hero" style="border-top:none; padding-top:56px;">
+    <div class="eyebrow">system status — engineering leadership</div>
+    <h1>Dmitry Kondratov</h1>
+    <div class="role">CTO / Technical Director <span>— .NET · SQL · Web3 · turnarounds</span></div>
+    <p class="summary">
+      21 years in software and IT leadership. I get called in when engineering is broken —
+      unclear architecture, no process, a team that's lost trust — and I rebuild it into
+      something stable. <strong>Fintech, brokerage, Web3/DeFi, systems integration.</strong>
+    </p>
+    <div class="meta-row">
+      <div class="chip status">● available — remote / contract / full-time</div>
+      <div class="chip">Moscow, RU · open to relocation</div>
+      <div class="chip"><a href="mailto:ekojim@gmail.com">ekojim@gmail.com</a></div>
+      <div class="chip"><a href="https://t.me/ekojim" target="_blank" rel="noopener">t.me/ekojim</a></div>
+      <div class="chip"><a href="tel:+79689580450">+7 968 958‑04‑50</a></div>
+    </div>
+  </section>
+
+  <section id="log">
+    <div class="section-head">
+      <span class="tag">2020 — 2026</span>
+      <h2>Incident log — resolved</h2>
+    </div>
+
+    <div class="incident" >
+      <div class="incident-head">
+        <div class="incident-title">
+          <div class="company">Onfin — Forex Broker</div>
+          <div class="role-line">CTO · Jun 2024 → Jun 2026 · 2 yrs 1 mo · Moscow</div>
+        </div>
+        <span class="badge critical">severity: turnaround</span>
+      </div>
+      <div class="incident-body">
+        <div class="symptom"><b>SYMPTOM —</b> IT organization underperforming, no risk framework, no modernization path.</div>
+        <ul class="fixlist">
+          <li>Audited infrastructure and solution architecture end to end</li>
+          <li>Defined modernization strategy, tech stack, and budget</li>
+          <li>Introduced AI orchestration into engineering and security workflows</li>
+          <li>Owned regulatory compliance and IT risk management</li>
+          <li>Rebuilt hiring, process, and team management from scratch</li>
+        </ul>
+        <div class="stack-row"><span>.NET</span><span>PostgreSQL</span><span>Docker</span><span>Kubernetes</span><span>Kibana</span></div>
+      </div>
+    </div>
+
+    <div class="incident" >
+      <div class="incident-head">
+        <div class="incident-title">
+          <div class="company">RAZOOM</div>
+          <div class="role-line">CTO · Jun 2023 → May 2024 · 1 yr · Moscow</div>
+        </div>
+        <span class="badge resolved">status: resolved</span>
+      </div>
+      <div class="incident-body">
+        <div class="symptom"><b>SYMPTOM —</b> No engineering process, unclear technical direction versus competitors.</div>
+        <ul class="fixlist">
+          <li>Owned technology stack and development budget</li>
+          <li>Built hiring and delivery process; epics → user stories</li>
+          <li>Ran competitive technical analysis, introduced best practices</li>
+        </ul>
+        <div class="stack-row"><span>.NET</span><span>Solidity</span><span>ReactJS</span><span>PostgreSQL</span><span>RabbitMQ</span><span>Kafka</span><span>Kubernetes</span></div>
+      </div>
+    </div>
+
+    <div class="incident" >
+      <div class="incident-head">
+        <div class="incident-title">
+          <div class="company">VRM Trade</div>
+          <div class="role-line">CTO · Sep 2021 → Jun 2022 · 10 mos · Moscow</div>
+        </div>
+        <span class="badge resolved">status: resolved</span>
+      </div>
+      <div class="incident-body">
+        <div class="symptom"><b>SYMPTOM —</b> In-house and outsourced teams uncoordinated; no ICO tooling in place.</div>
+        <ul class="fixlist">
+          <li>Led in-house and outsourced engineering/DevOps teams</li>
+          <li>Personally built ICO administration tooling (.NET, Solidity, Python)</li>
+          <li>Deployed and maintained blockchain node infrastructure</li>
+        </ul>
+        <div class="stack-row"><span>.NET</span><span>Python</span><span>Solidity</span><span>Rust</span><span>Docker</span><span>Kubernetes</span></div>
+      </div>
+    </div>
+
+    <div class="incident" >
+      <div class="incident-head">
+        <div class="incident-title">
+          <div class="company">PSB — SME Factoring</div>
+          <div class="role-line">Principal Software Engineer · Mar 2020 → Mar 2021 · 1 yr 1 mo</div>
+        </div>
+        <span class="badge resolved">status: resolved</span>
+      </div>
+      <div class="incident-body">
+        <div class="symptom"><b>SYMPTOM —</b> Vendor-delivered system, undocumented, monolithic, hard to extend.</div>
+        <ul class="fixlist">
+          <li>Reverse-engineered and audited the inherited system in full</li>
+          <li>Built the technical backlog for a monolith → microservices migration</li>
+          <li>Integrated with internal banking systems, e-signatures, government registries</li>
+        </ul>
+        <div class="stack-row"><span>.NET Core 3.x</span><span>MSSQL</span><span>NodeJS</span><span>SOAP</span><span>TeamCity</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="earlier">
+    <div class="section-head">
+      <span class="tag">2003 — 2020</span>
+      <h2>Earlier log entries</h2>
+    </div>
+    <div>
+      <div class="log-line"><span class="ts">2018–2020</span><span class="lc">Snegir Soft — Lead Developer. Microservices discovery system, vSphere/Veeam/AD integrations.</span></div>
+      <div class="log-line"><span class="ts">2017–2018</span><span class="lc">Sistema Multipass — Web Developer / C#. Reporting services, web analytics.</span></div>
+      <div class="log-line"><span class="ts">2015–2017</span><span class="lc">Helgilab — Head of Mobile Dev. Android/iOS apps, Moscow panorama project, Google Play releases.</span></div>
+      <div class="log-line"><span class="ts">2014–2015</span><span class="lc">Elementarium — Lead Flash Developer. Match‑3 game architecture.</span></div>
+      <div class="log-line"><span class="ts">2009–2014</span><span class="lc">Iron Nuts / Game Insight / Q1 — Flash Developer. MMO client development, game economy design.</span></div>
+      <div class="log-line"><span class="ts">2003–2009</span><span class="lc">Logika Plus — Sysadmin → Director. Network infrastructure, call‑center launch, team leadership.</span></div>
+    </div>
+  </section>
+
+  <section id="capabilities">
+    <div class="section-head">
+      <span class="tag">core</span>
+      <h2>Capabilities</h2>
+    </div>
+    <div class="cap-grid">
+      <div class="cap"><div class="k">TEAM BUILDING</div><div class="v">Hiring, management, and scaling engineering + DevOps teams from the ground up.</div></div>
+      <div class="cap"><div class="k">AUDIT &amp; STRATEGY</div><div class="v">Infrastructure and architecture audits; modernization and scaling roadmaps.</div></div>
+      <div class="cap"><div class="k">RISK &amp; COMPLIANCE</div><div class="v">Security standards, regulatory compliance, IT risk management in regulated finance.</div></div>
+      <div class="cap"><div class="k">BUDGET &amp; STACK</div><div class="v">Technology stack selection and development budget ownership.</div></div>
+      <div class="cap"><div class="k">AI ADOPTION</div><div class="v">Introducing AI orchestration into engineering and security workflows.</div></div>
+      <div class="cap"><div class="k">WEB3 / DEFI</div><div class="v">Solidity, node infrastructure, ICO tooling, blockchain administration.</div></div>
+    </div>
+
+    <div class="stack-cloud">
+      <span>.NET / C#</span><span>Python</span><span>Solidity</span><span>JavaScript</span>
+      <span>PostgreSQL</span><span>MS SQL</span><span>MySQL</span><span>Redis</span>
+      <span>Docker</span><span>Kubernetes</span><span>Kibana</span><span>TeamCity</span>
+      <span>VMware</span><span>Linux</span><span>Entity Framework</span><span>OSINT</span>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-panel">
+      <h2>Open to new incidents.</h2>
+      <p>Available for CTO / Technical Director engagements — remote, contract, or full‑time. Fintech, brokerage, and Web3 backgrounds preferred but not required.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="mailto:ekojim@gmail.com">Email me →</a>
+        <a class="btn ghost" href="https://t.me/ekojim" target="_blank" rel="noopener">Message on Telegram</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Dmitry Kondratov — CTO / Technical Director · Moscow, Russia · Far Eastern State Technical University, 2007 · Russian (native) · English (C1)
+  </footer>
+
+</div>
+
+</body>
+</html>
